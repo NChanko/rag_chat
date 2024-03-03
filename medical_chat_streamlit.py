@@ -6,7 +6,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter,RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI
-from check_db import check_and_unzip_medical_db
+from check_db import db_check
 
 from langchain.schema import (
     AIMessage,
@@ -20,7 +20,7 @@ embedding_function =OpenAIEmbeddings(openai_api_key=openaikey)
 chat = ChatOpenAI(openai_api_key=openaikey)
 
 # Check database.
-check_and_unzip_medical_db()
+db_check()
                            
 def load_db_from_disk():
     db = Chroma(persist_directory="./medical_db", embedding_function=embedding_function)
