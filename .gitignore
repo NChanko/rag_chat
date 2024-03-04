@@ -1,0 +1,7 @@
+*.ipynb
+med_chat_telegram.py
+medical_books/
+new_books/
+.streamlit/
+.env
+medical_db/
