@@ -1,16 +1,12 @@
 import streamlit as st
-from openai import OpenAI
-from langchain_community.document_loaders import TextLoader
-from langchain_community.document_loaders import DirectoryLoader
-from langchain_openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter,RecursiveCharacterTextSplitter
+#from openai import OpenAI
 from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI
 from check_db import db_check
+from langchain_openai import OpenAIEmbeddings
 
 
 from langchain.schema import (
-    AIMessage,
     HumanMessage,
     SystemMessage
 )

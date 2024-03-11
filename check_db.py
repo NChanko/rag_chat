@@ -1,29 +1,37 @@
 import requests
 import zipfile
-import io
 import os
-
 def download_and_unzip(zip_url, extract_to):
-    # Attempt to download the ZIP file
-    response = requests.get(zip_url)
-    if response.status_code == 200:
-        # Use a BytesIO object as a buffer for the ZIP file content
-        with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-            # Extract the content to the specified directory
-            zip_ref.extractall("./")
-        print("File unzipped successfully.")
+    """
+    Downloads a ZIP file from the specified URL and extracts it to the given directory.
+    """
+    extract_to = "./"
+    # Download the ZIP file
+    zip_path = './medical_db.zip'
+    if not os.path.exists(zip_path):
+        print(f"Downloading ZIP file from '{zip_url}'...")
+        response = requests.get(zip_url)
+        with open(zip_path, 'wb') as zip_file:
+            zip_file.write(response.content)
+        print("Download completed.")
     else:
-        print(f"Failed to download the file. Status code: {response.status_code}")
+        print("ZIP file already exists.")
+
+    # Unzip the downloaded file
+    print(f"Extracting '{zip_path}' to '{extract_to}'...")
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+    print("Extraction completed.")
 
 def db_check():
-    # URL of the ZIP file
     zip_url = 'https://github.com/NChanko/rag_chat/blob/main/medical_db.zip?raw=true'
-    # Local directory path
     db_folder_path = './medical_db'
-    
-    # Check if the db_folder_path exists, if not, download and unzip
+
     if not os.path.exists(db_folder_path):
         print(f"'{db_folder_path}' does not exist. Starting download and unzip process.")
         download_and_unzip(zip_url, db_folder_path)
     else:
         print(f"'{db_folder_path}' already exists.")
+
+# Example usage
+db_check()
