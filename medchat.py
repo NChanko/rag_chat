@@ -5,7 +5,6 @@ from langchain_openai import ChatOpenAI
 from check_db import db_check
 from langchain_openai import OpenAIEmbeddings
 
-
 from langchain.schema import (
     HumanMessage,
     SystemMessage
@@ -52,7 +51,7 @@ def handle_query(query):
 
     if raw_answers:
         matched_chunk = raw_answers[0]  # Assuming the first document is the most relevant
-        print(matched_chunk.page_content)
+        #print(matched_chunk.page_content)
         
         answer = openai_process(str(query),str(matched_chunk))  # Process the document to generate an answer
     else:

@@ -3,7 +3,8 @@ from langchain_community.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from medchat import openaikey
+import streamlit as st
+openaikey = st.secrets["OPENAIKEY"]
 
 def process_documents(directory, db=None, has_new_docs=False):
     loader = DirectoryLoader(directory, glob="./*.txt", loader_cls=TextLoader)
@@ -16,6 +17,7 @@ def process_documents(directory, db=None, has_new_docs=False):
         db = Chroma.from_documents(splitted_documents, OpenAIEmbeddings(openai_api_key=openaikey), persist_directory="./medical_db")
     elif has_new_docs:
         # Update the database with new documents
+        print("Adding new documents to the database...")
         # This step assumes `db` has a method like `add_documents` for adding new documents
         db.add_documents(splitted_documents)
 
